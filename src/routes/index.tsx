@@ -7,6 +7,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useMemo, useState } from 'react';
 import { Header } from '@/components/Header';
 import { HeroSlider } from '@/components/HeroSlider';
+import { ImageShowcaseSlider } from '@/components/ImageShowcaseSlider';
 import { TrustBar } from '@/components/TrustBar';
 import { SearchAndCategories } from '@/components/SearchAndCategories';
 import { ProductCard } from '@/components/ProductCard';
@@ -70,6 +71,9 @@ function HomePage() {
 
       {/* السلايدر الترحيبي */}
       <HeroSlider />
+
+      {/* سلايدر صور تحت الهيرو - 5 سلايدات (الصاحب يضيف صوره) */}
+      <ImageShowcaseSlider />
 
       {/* شريط الثقة (3 بطاقات: ضمان، ثقة، استرداد) */}
       <TrustBar />
