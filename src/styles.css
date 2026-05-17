@@ -164,3 +164,7 @@
   transform: translateY(-6px);
   box-shadow: var(--shadow-gold);
 }
+
+/* إخفاء شريط التمرير الأفقي - مستخدم في تبويبات الأدوات */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
