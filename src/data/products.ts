@@ -13,6 +13,7 @@ export interface Product {
   category: string;      // القسم (محرك، فرامل، كهرباء...)
   image: string;         // رابط الصورة
   isOffer?: boolean;     // علامة العروض
+  isNew?: boolean;       // علامة "وصل حديثاً"
   brand?: string;        // الصانع/التوافق (اختياري للعرض فقط، ليس قسماً)
 }
 
@@ -38,6 +39,7 @@ export const products: Product[] = [
     category: 'engine',
     image: 'https://images.unsplash.com/photo-1486006920555-c77dcf18193c?w=600&q=80',
     brand: 'Volvo',
+    isNew: true,
   },
   {
     id: 'p2',
