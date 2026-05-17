@@ -12,6 +12,7 @@ import { TrustBar } from '@/components/TrustBar';
 import { SearchAndCategories } from '@/components/SearchAndCategories';
 import { ProductCard } from '@/components/ProductCard';
 import { TipsSection } from '@/components/TipsSection';
+import { ServicesSection } from '@/components/ServicesSection';
 import { Footer } from '@/components/Footer';
 import { FavoritesDrawer } from '@/components/FavoritesDrawer';
 import { products } from '@/data/products';
@@ -155,6 +156,9 @@ function HomePage() {
 
       {/* قسم النصائح والمعلومات */}
       <TipsSection />
+
+      {/* قسم الخدمات الإلكترونية (خدمات الابن - تصميم مواقع) */}
+      <ServicesSection />
 
       {/* قسم "من نحن" المختصر */}
       <section id="about" className="container mx-auto px-4 py-20">
