@@ -3,8 +3,9 @@
 // ثابت في أعلى الصفحة (sticky) مع تأثير زجاجي عند التمرير
 // =========================================================
 import { useEffect, useState } from 'react';
+import { Link } from '@tanstack/react-router';
 import logo from '@/assets/logo.png';
-import { Heart, MessageCircle, Menu, X } from 'lucide-react';
+import { Heart, MessageCircle, Menu, X, Wrench } from 'lucide-react';
 import { buildGeneralWhatsAppLink } from '@/lib/whatsapp';
 
 interface HeaderProps {
@@ -41,20 +42,20 @@ export function Header({ favoritesCount, onOpenFavorites }: HeaderProps) {
           : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
-        {/* الشعار + اسم الشركة */}
-        <a href="#top" className="flex items-center gap-3 shrink-0">
-          <img src={logo} alt="شعار شركة تليد وجديد" className="h-12 w-12 object-contain" />
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-2 sm:gap-4">
+        {/* الشعار + اسم الشركة - رابط للرئيسية */}
+        <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <img src={logo} alt="شعار شركة تليد وجديد" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
           <div className="hidden sm:block">
-            <h1 className="text-lg font-extrabold text-foreground leading-tight">
+            <h1 className="text-base sm:text-lg font-extrabold text-foreground leading-tight">
               شركة <span className="text-gradient-gold">تليد وجديد</span>
             </h1>
             <p className="text-xs text-muted-foreground">قطع غيار الشاحنات</p>
           </div>
-        </a>
+        </Link>
 
         {/* روابط التنقل - تظهر على الديسكتوب فقط */}
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -62,10 +63,17 @@ export function Header({ favoritesCount, onOpenFavorites }: HeaderProps) {
               className="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors relative group"
             >
               {link.label}
-              {/* خط ذهبي يظهر تحت الرابط عند المرور */}
               <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-gradient-gold group-hover:w-full transition-all duration-300" />
             </a>
           ))}
+          {/* رابط صفحة الأدوات */}
+          <Link
+            to="/tools"
+            className="text-sm font-bold text-primary inline-flex items-center gap-1.5 hover:opacity-80"
+          >
+            <Wrench className="w-4 h-4" />
+            الأدوات والخدمات
+          </Link>
         </nav>
 
         {/* أزرار يمين الهيدر */}
@@ -119,6 +127,15 @@ export function Header({ favoritesCount, onOpenFavorites }: HeaderProps) {
                 {link.label}
               </a>
             ))}
+            {/* رابط صفحة الأدوات في قائمة الجوال */}
+            <Link
+              to="/tools"
+              onClick={() => setMobileOpen(false)}
+              className="py-2 px-3 rounded-lg bg-primary/10 text-primary font-bold inline-flex items-center gap-2"
+            >
+              <Wrench className="w-4 h-4" />
+              الأدوات والخدمات
+            </Link>
             <a
               href={buildGeneralWhatsAppLink()}
               target="_blank" rel="noopener noreferrer"

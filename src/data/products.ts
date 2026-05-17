@@ -13,6 +13,7 @@ export interface Product {
   category: string;      // القسم (محرك، فرامل، كهرباء...)
   image: string;         // رابط الصورة
   isOffer?: boolean;     // علامة العروض
+  isNew?: boolean;       // علامة "وصل حديثاً"
   brand?: string;        // الصانع/التوافق (اختياري للعرض فقط، ليس قسماً)
 }
 
@@ -38,6 +39,7 @@ export const products: Product[] = [
     category: 'engine',
     image: 'https://images.unsplash.com/photo-1486006920555-c77dcf18193c?w=600&q=80',
     brand: 'Volvo',
+    isNew: true,
   },
   {
     id: 'p2',
@@ -94,6 +96,7 @@ export const products: Product[] = [
     category: 'electric',
     image: 'https://images.unsplash.com/photo-1597007030739-6d2e7172ee72?w=600&q=80',
     brand: 'Hino',
+    isNew: true,
   },
   {
     id: 'p8',
