@@ -96,6 +96,7 @@ export const products: Product[] = [
     category: 'electric',
     image: 'https://images.unsplash.com/photo-1597007030739-6d2e7172ee72?w=600&q=80',
     brand: 'Hino',
+    isNew: true,
   },
   {
     id: 'p8',
