@@ -159,7 +159,7 @@ function SelectPart({ label, value, onChange }: { label: string; value: string; 
       >
         <option value="">— اختر قطعة —</option>
         {products.map((p) => (
-          <option key={p.id} value={p.id}>{p.name} ({p.partNumber})</option>
+          <option key={p.id} value={p.id}>{p.name}</option>
         ))}
       </select>
     </label>
@@ -300,16 +300,15 @@ function CompatibilityGuide() {
         {filtered.map((p) => (
           <a
             key={p.id}
-            href={buildProductWhatsAppLink(p.name, p.partNumber)}
+            href={buildProductWhatsAppLink(p.name, p.description)}
             target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-3 bg-card border border-border rounded-xl p-3 hover:bg-accent transition"
           >
             <img src={p.image} alt={p.name} className="w-14 h-14 rounded-lg object-cover shrink-0" />
             <div className="flex-1 min-w-0">
               <div className="font-bold text-sm truncate">{p.name}</div>
-              <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5" dir="ltr">
-                <Hash className="w-3 h-3" />
-                {p.partNumber}
+              <div className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                {p.description}
               </div>
             </div>
             {p.brand && (
