@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "شركة تليد وجديد — كتالوج قطع غيار الشاحنات" },
+      { title: "شركة تليد وجديد" },
       { name: "description", content: "كتالوج رقمي لقطع غيار الشاحنات مع استفسار واتساب مباشر." },
       { name: "author", content: "شركة تليد وجديد" },
       { property: "og:title", content: "شركة تليد وجديد" },
-      { property: "og:description", content: "كتالوج رقمي لقطع غيار الشاحنات." },
+      { property: "og:description", content: "كتالوج رقمي لقطع غيار الشاحنات مع استفسار واتساب مباشر." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "شركة تليد وجديد" },
+      { name: "twitter:description", content: "كتالوج رقمي لقطع غيار الشاحنات مع استفسار واتساب مباشر." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/rNfMuSvakJQowYAfc24gKwhsUMd2/social-images/social-1779113686908-36676.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/rNfMuSvakJQowYAfc24gKwhsUMd2/social-images/social-1779113686908-36676.webp" },
     ],
     links: [
       {
