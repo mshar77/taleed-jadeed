@@ -9,17 +9,17 @@ export const PHONE_DISPLAY  = '0536655941';
 
 /**
  * يبني رابط واتساب مع رسالة جاهزة لمنتج معين
+ * الرسالة تحتوي على اسم القطعة ووصفها فقط (بدون رقم قطعة)
  * @param productName اسم المنتج
- * @param partNumber  رقم القطعة
+ * @param description وصف المنتج (اختياري)
  */
-export function buildProductWhatsAppLink(productName: string, partNumber: string) {
+export function buildProductWhatsAppLink(productName: string, description?: string) {
   // الرسالة الجاهزة باللغة العربية — تنرسل لوالد العميل مباشرة
   const message =
 `السلام عليكم 👋
 أبغى أستفسر عن هذي القطعة من *شركة تليد وجديد*:
 
-🔧 *الاسم:* ${productName}
-🔢 *رقم القطعة:* ${partNumber}
+🔧 *الاسم:* ${productName}${description ? `\n📝 *الوصف:* ${description}` : ''}
 
 هل متوفرة وكم سعرها؟
 شكراً 🌹`;
