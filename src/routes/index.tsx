@@ -3,7 +3,7 @@
 // تجمع كل المكونات في تجربة واحدة سلسة:
 //   هيرو (سلايدر) → ثقة → بحث+أقسام → عروض → كل القطع → نصائح → فوتر
 // =========================================================
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useMemo, useState } from 'react';
 import { Header } from '@/components/Header';
 import { HeroSlider } from '@/components/HeroSlider';
@@ -17,7 +17,7 @@ import { Footer } from '@/components/Footer';
 import { FavoritesDrawer } from '@/components/FavoritesDrawer';
 import { products } from '@/data/products';
 import { useFavorites } from '@/hooks/use-favorites';
-import { Flame, PackageSearch } from 'lucide-react';
+import { Flame, PackageSearch, Sparkles, ArrowLeft } from 'lucide-react';
 
 export const Route = createFileRoute('/')({
   // بيانات SEO الأساسية للصفحة
