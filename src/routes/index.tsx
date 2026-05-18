@@ -17,7 +17,7 @@ import { Footer } from '@/components/Footer';
 import { FavoritesDrawer } from '@/components/FavoritesDrawer';
 import { products } from '@/data/products';
 import { useFavorites } from '@/hooks/use-favorites';
-import { Flame, PackageSearch } from 'lucide-react';
+import { Flame, PackageSearch, Sparkles, ArrowLeft } from 'lucide-react';
 
 export const Route = createFileRoute('/')({
   // بيانات SEO الأساسية للصفحة
@@ -55,7 +55,7 @@ function HomePage() {
 
       // فلتر البحث - يطابق رقم القطعة (الأهم) أو الاسم أو الوصف
       if (q) {
-        const haystack = `${p.name} ${p.partNumber} ${p.description} ${p.brand ?? ''}`.toLowerCase();
+        const haystack = `${p.name} ${p.description} ${p.brand ?? ''}`.toLowerCase();
         if (!haystack.includes(q)) return false;
       }
       return true;
@@ -72,6 +72,32 @@ function HomePage() {
 
       {/* السلايدر الترحيبي */}
       <HeroSlider />
+
+      {/* زر بارز للخدمات الإلكترونية - ينقل لقسم الخدمات في نفس الصفحة */}
+      <section className="container mx-auto px-4 pt-6">
+        <a
+          href="#services"
+          className="group relative block overflow-hidden rounded-2xl bg-gradient-gold p-5 sm:p-6 shadow-gold hover:shadow-soft transition-all"
+        >
+          {/* تأثير لمعان خفيف */}
+          <div className="absolute inset-0 bg-gradient-to-l from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="relative flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center shrink-0">
+                <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              </div>
+              <div className="text-white">
+                <div className="text-xs sm:text-sm font-semibold opacity-90">جديد ✨</div>
+                <div className="text-base sm:text-xl font-extrabold">الخدمات الإلكترونية — تصميم مواقع ومتاجر</div>
+              </div>
+            </div>
+            <span className="inline-flex items-center gap-2 bg-white text-primary px-4 py-2.5 rounded-full font-bold text-sm shadow-soft group-hover:scale-105 transition-transform">
+              اكتشف الخدمات
+              <ArrowLeft className="w-4 h-4" />
+            </span>
+          </div>
+        </a>
+      </section>
 
       {/* سلايدر صور تحت الهيرو - 5 سلايدات (الصاحب يضيف صوره) */}
       <ImageShowcaseSlider />

@@ -1,8 +1,9 @@
 // =========================================================
 // بطاقة المنتج - تعرض القطعة بشكل أنيق ومرتب
-// تحتوي على: صورة، اسم، رقم القطعة، وصف، أزرار واتساب/مفضلة/مشاركة
+// تحتوي على: صورة، اسم، وصف، أزرار واتساب/مفضلة/مشاركة
+// (تم إزالة رقم القطعة بناءً على طلب العميل)
 // =========================================================
-import { Heart, MessageCircle, Share2, Hash, Check } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Check } from 'lucide-react';
 import { useState } from 'react';
 import type { Product } from '@/data/products';
 import { buildProductWhatsAppLink } from '@/lib/whatsapp';
@@ -17,10 +18,10 @@ export function ProductCard({ product, isFavorite, onToggleFavorite }: ProductCa
   // حالة "تم نسخ الرابط" بعد ضغط زر المشاركة
   const [copied, setCopied] = useState(false);
 
-  // زر المشاركة: ينسخ رابط مباشر للقطعة عن طريق #partNumber
+  // زر المشاركة: ينسخ رابط مباشر للقطعة عبر id
   const handleShare = async () => {
-    const url = `${window.location.origin}/#part-${product.partNumber}`;
-    const shareText = `${product.name} - رقم القطعة: ${product.partNumber}\n${url}`;
+    const url = `${window.location.origin}/#part-${product.id}`;
+    const shareText = `${product.name}\n${product.description}\n${url}`;
 
     // نستخدم Web Share API لو متوفر (الجوالات)، وإلا ننسخ للحافظة
     if (navigator.share) {
@@ -38,7 +39,7 @@ export function ProductCard({ product, isFavorite, onToggleFavorite }: ProductCa
 
   return (
     <article
-      id={`part-${product.partNumber}`}
+      id={`part-${product.id}`}
       className="card-hover bg-card rounded-2xl overflow-hidden border border-border shadow-card group"
     >
       {/* الصورة + شارة العرض إن وجدت */}
@@ -76,25 +77,16 @@ export function ProductCard({ product, isFavorite, onToggleFavorite }: ProductCa
           {product.name}
         </h3>
 
-        {/* رقم القطعة - مهم جداً ومميز بصرياً */}
-        <div className="flex items-center gap-2 bg-accent/60 border border-primary/20 rounded-lg px-3 py-2 mb-3">
-          <Hash className="w-3.5 h-3.5 text-primary shrink-0" />
-          <span className="text-xs text-muted-foreground">رقم القطعة:</span>
-          <span className="text-sm font-mono font-bold text-primary tracking-wider ltr:font-mono" dir="ltr">
-            {product.partNumber}
-          </span>
-        </div>
-
-        {/* الوصف - مختصر */}
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 leading-relaxed">
+        {/* الوصف */}
+        <p className="text-sm text-muted-foreground line-clamp-3 mb-4 leading-relaxed min-h-[3.75rem]">
           {product.description}
         </p>
 
         {/* أزرار الإجراءات */}
         <div className="flex gap-2">
-          {/* الزر الرئيسي: واتساب مباشر مع رسالة جاهزة */}
+          {/* الزر الرئيسي: واتساب مباشر مع رسالة جاهزة (اسم + وصف فقط) */}
           <a
-            href={buildProductWhatsAppLink(product.name, product.partNumber)}
+            href={buildProductWhatsAppLink(product.name, product.description)}
             target="_blank" rel="noopener noreferrer"
             className="flex-1 bg-[var(--whatsapp)] text-white px-4 py-2.5 rounded-xl font-bold text-sm inline-flex items-center justify-center gap-2 hover:opacity-90 transition shadow-soft"
           >

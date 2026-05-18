@@ -76,12 +76,12 @@ export function FavoritesDrawer({ open, onClose, favorites, onToggleFavorite }: 
                   />
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-sm line-clamp-1">{p.name}</h4>
-                    <p className="text-xs font-mono text-primary mt-0.5" dir="ltr">
-                      {p.partNumber}
+                    <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                      {p.description}
                     </p>
                     <div className="flex gap-1 mt-2">
                       <a
-                        href={buildProductWhatsAppLink(p.name, p.partNumber)}
+                        href={buildProductWhatsAppLink(p.name, p.description)}
                         target="_blank" rel="noopener noreferrer"
                         className="flex-1 bg-[var(--whatsapp)] text-white text-xs font-bold py-1.5 rounded-lg inline-flex items-center justify-center gap-1"
                       >

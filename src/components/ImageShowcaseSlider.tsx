@@ -1,10 +1,10 @@
 // =========================================================
 // سلايدر صور عرضي تحت الهيرو مباشرة
-// 5 سلايدات فاضية - الصاحب يبدّل الصور والعناوين من نفس الملف
-// يتحرك تلقائياً + أزرار يمين/يسار + نقاط أسفل
+// 5 سلايدات - الصاحب يبدّل الصور والعناوين من نفس الملف
+// يتحرك تلقائياً + تنقّل بالسحب باللمس (Swipe) فقط - بدون أسهم
+// مكبّر أكثر لإبراز الصور
 // =========================================================
-import { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 // 👇 عدّل هذه المصفوفة لإضافة صورك وعناوينك
 const showcaseSlides = [
@@ -37,17 +37,47 @@ const showcaseSlides = [
 
 export function ImageShowcaseSlider() {
   const [index, setIndex] = useState(0);
+  // مرجع لنقطة بداية اللمس لحساب اتجاه السحب
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
 
-  // تدوير تلقائي كل 4 ثواني
+  // تدوير تلقائي كل 5 ثواني
   useEffect(() => {
     const t = setInterval(() => {
       setIndex((i) => (i + 1) % showcaseSlides.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(t);
   }, []);
 
   const next = () => setIndex((i) => (i + 1) % showcaseSlides.length);
   const prev = () => setIndex((i) => (i - 1 + showcaseSlides.length) % showcaseSlides.length);
+
+  // ============= معالجات السحب باللمس =============
+  // عند بدء اللمس - نسجّل النقطة الأولى
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = null;
+  };
+
+  // مع تحرّك الإصبع - نحدّث النقطة الأخيرة
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  // عند رفع الإصبع - نحسب المسافة ونحدد الاتجاه
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipe = 50; // أقل مسافة لاعتبار الحركة سحب
+
+    // ملاحظة: الموقع RTL — السحب لليسار يعني التالي، واليمين يعني السابق
+    // لكن منطق الإحداثيات لا يتأثر بـ RTL
+    if (distance > minSwipe) next();      // سحب لليسار → التالي
+    else if (distance < -minSwipe) prev(); // سحب لليمين → السابق
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   return (
     <section className="container mx-auto px-4 py-12">
@@ -61,49 +91,39 @@ export function ImageShowcaseSlider() {
         </h2>
       </div>
 
-      {/* صندوق السلايدر */}
-      <div className="relative w-full aspect-[16/7] rounded-3xl overflow-hidden shadow-gold border border-border">
+      {/* صندوق السلايدر - مكبّر (نسبة أعلى للجوال 4/5، 16/9 للديسكتوب) */}
+      <div
+        className="relative w-full aspect-[4/5] sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[21/9] rounded-3xl overflow-hidden shadow-gold border border-border touch-pan-y select-none cursor-grab active:cursor-grabbing"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {showcaseSlides.map((slide, i) => (
           <div
             key={i}
             className={`absolute inset-0 transition-opacity duration-700 ${
-              i === index ? 'opacity-100' : 'opacity-0'
+              i === index ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
           >
             <img
               src={slide.image}
               alt={slide.title}
+              draggable={false}
               className="w-full h-full object-cover"
             />
             {/* تعتيم خفيف لإبراز النص */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
             {/* نص فوق الصورة */}
-            <div className="absolute bottom-6 right-6 text-white max-w-md">
-              <h3 className="text-xl md:text-2xl font-bold mb-1">{slide.title}</h3>
-              <p className="text-sm md:text-base text-white/90">{slide.caption}</p>
+            <div className="absolute bottom-6 right-6 left-6 text-white max-w-md">
+              <h3 className="text-xl md:text-3xl font-bold mb-1">{slide.title}</h3>
+              <p className="text-sm md:text-lg text-white/90">{slide.caption}</p>
             </div>
           </div>
         ))}
 
-        {/* أزرار التنقل */}
-        <button
-          onClick={prev}
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur p-2.5 rounded-full shadow-soft hover:bg-background transition"
-          aria-label="السابق"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
-        <button
-          onClick={next}
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur p-2.5 rounded-full shadow-soft hover:bg-background transition"
-          aria-label="التالي"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-
-        {/* النقاط أسفل السلايدر */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+        {/* النقاط أسفل السلايدر - مهمة للإشارة + كأزرار تنقل بديلة */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {showcaseSlides.map((_, i) => (
             <button
               key={i}
@@ -116,6 +136,11 @@ export function ImageShowcaseSlider() {
           ))}
         </div>
       </div>
+
+      {/* تلميحة للمستخدم: اسحب للتنقل */}
+      <p className="text-center text-xs text-muted-foreground mt-3 sm:hidden">
+        ← اسحب يميناً أو يساراً للتنقل بين الصور →
+      </p>
     </section>
   );
 }
