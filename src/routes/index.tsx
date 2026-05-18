@@ -3,7 +3,7 @@
 // تجمع كل المكونات في تجربة واحدة سلسة:
 //   هيرو (سلايدر) → ثقة → بحث+أقسام → عروض → كل القطع → نصائح → فوتر
 // =========================================================
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useMemo, useState } from 'react';
 import { Header } from '@/components/Header';
 import { HeroSlider } from '@/components/HeroSlider';
