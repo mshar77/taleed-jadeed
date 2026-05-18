@@ -55,7 +55,7 @@ function HomePage() {
 
       // فلتر البحث - يطابق رقم القطعة (الأهم) أو الاسم أو الوصف
       if (q) {
-        const haystack = `${p.name} ${p.partNumber} ${p.description} ${p.brand ?? ''}`.toLowerCase();
+        const haystack = `${p.name} ${p.description} ${p.brand ?? ''}`.toLowerCase();
         if (!haystack.includes(q)) return false;
       }
       return true;
